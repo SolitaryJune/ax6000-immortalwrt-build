@@ -44,6 +44,22 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
+    # 缓存编译工具链 + 已下载源码包 + ccache,后续编译从 2-3h 降到 ~40min
+    - name: Cache toolchain and downloads
+      uses: actions/cache@main
+      with:
+        path: |
+          ~/.cache
+          openwrt/dl
+          openwrt/.ccache
+          openwrt/staging_dir/host
+          openwrt/staging_dir/toolchain-*
+          openwrt/build_dir/host
+          openwrt/build_dir/toolchain-*
+        key: ${{ runner.os }}-openwrt-cache
+        restore-keys: |
+          ${{ runner.os }}-openwrt-cache
+
     - name: Load custom feeds
       run: |
         chmod +x $DIY_P1_SH
