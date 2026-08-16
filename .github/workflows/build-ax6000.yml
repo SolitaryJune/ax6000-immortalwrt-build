@@ -15,6 +15,9 @@ env:
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
+permissions:
+  contents: write   # 需要写权限才能创建/更新 Release (上传固件)
+
 jobs:
   build:
     runs-on: ubuntu-22.04
