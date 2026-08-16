@@ -37,3 +37,15 @@ grep -n 'GOROOT_BOOTSTRAP=' $GOLANG_MK
 # 4) 配置外部 bootstrap(写入 .config,make defconfig 会保留显式设置)
 sed -i '/CONFIG_GOLANG_EXTERNAL_BOOTSTRAP_ROOT/d' .config
 echo 'CONFIG_GOLANG_EXTERNAL_BOOTSTRAP_ROOT="/opt/go"' >> .config
+
+# 5) Go modules 走国内镜像:proxy.golang.org 常被墙/IPv6 超时导致下载失败
+#    (goproxy.cn 走 IPv4,实测可用;direct 兜底直连)
+#    GitHub Actions 每个 step 是独立 shell,必须写入 $GITHUB_ENV 才能让后续
+#    make download / 编译 step 生效;本地构建则直接 export
+if [ -n "$GITHUB_ENV" ]; then
+  echo 'GOPROXY=https://goproxy.cn,direct' >> $GITHUB_ENV
+  echo 'GOSUMDB=sum.golang.google.cn' >> $GITHUB_ENV
+else
+  export GOPROXY=https://goproxy.cn,direct
+  export GOSUMDB=sum.golang.google.cn
+fi
