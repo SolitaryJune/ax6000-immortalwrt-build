@@ -6,7 +6,8 @@
 
 - **网络加速**:TurboACC MTK 专用(硬件 NAT / Flow Offload)、`kmod-nf-flow`、`kmod-mediatek_hnat`
 - **PassWall**(xray + sing-box 双核心,官方最新源码)
-- **mwan3** 多 WAN 负载均衡
+- PassWall(xray + sing-box 双核心)
+- 无线中继主链路:5G + 2.4G 备用(无需 mwan3)
 - 闭源 MTK WiFi 驱动(MT7986 AX6000)
 
 ## 设备
@@ -27,7 +28,7 @@
 
 ```
 .github/workflows/build-ax6000.yml  # GitHub Actions 编译工作流
-configs/ax6000.config              # 编译配置(基于官方 defconfig 精简 + PassWall/mwan3)
+configs/ax6000.config              # 编译配置(基于官方 defconfig 精简 + PassWall)
 scripts/diy-part1.sh               # feeds 更新前执行的脚本
 scripts/diy-part2.sh               # 配置后处理脚本
 ```

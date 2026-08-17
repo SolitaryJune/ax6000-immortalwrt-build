@@ -1,4 +1,4 @@
-name: Build Redmi AX6000 ImmortalWrt 24.10-6.6 (PassWall+mwan3+加速)
+name: Build Redmi AX6000 ImmortalWrt 24.10-6.6 (PassWall+加速)
 
 on:
   workflow_dispatch:
